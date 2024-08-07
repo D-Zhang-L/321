@@ -16,12 +16,12 @@ def get_time():
     a = dictDate[nowtime.strftime('%A')]
     return nowtime.strftime("%Y年%m月%d日") + a
 
-
 def get_words():
-    words = requests.get("https://api.shadiao.pro/chp")
-    if words.status_code != 200:
-        return get_words()
-    return words.json()['data']['text']
+  # OpenRefactory Warning: The 'requests.get' method does not use any 'timeout' threshold which may cause program to hang indefinitely.
+  words = requests.get("https://api.shadiao.pro/chp", timeout=100)
+  if words.status_code != 200:
+    return get_words()
+  return words.json()['data']['text']
 
 def get_weather(city, key):
     url = f"https://restapi.amap.com/v3/weather/weatherInfo?city=210200&key=d59056d227370d057687bfceeba83cf2"
