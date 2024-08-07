@@ -83,7 +83,7 @@ if __name__ == '__main__':
         data['born_days'] = {'value': get_count(born_date)}
         data['birthday_left'] = {'value': get_birthday(birthday)}
         data['wind'] = {'value': weather['winddirection']}
-        data['name'] = {'value': name}
+        data['name'] = {'value': name, 'color':get_random_color()}
 
         res = wm.send_template(user_id, template_id, data)
         print(res)
