@@ -40,6 +40,9 @@ def get_birthday(birthday):
     if nextdate < today:
         nextdate = nextdate.replace(year=nextdate.year + 1)
     return (nextdate - today).days
+    
+def get_random_color():
+  return "#%06x" % random.randint(0, 0xFFFFFF)
 
 
 if __name__ == '__main__':
@@ -72,7 +75,7 @@ if __name__ == '__main__':
         wea_city,weather = get_weather(city,weather_key)
         data = dict()
         data['time'] = {'value': out_time}
-        data['words'] = {'value': words}
+        data['words'] = {'value': words,, 'color':get_random_color()}
         data['weather'] = {'value': weather['weather']}
         data['city'] = {'value': wea_city}
         data['tem_high'] = {'value': weather['temperature']}
