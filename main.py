@@ -75,7 +75,7 @@ if __name__ == '__main__':
         wea_city,weather = get_weather(city,weather_key)
         data = dict()
         data['time'] = {'value': out_time}
-        data['words'] = {'value': words,, 'color':get_random_color()}
+        data['words'] = {'value': words, 'color':get_random_color()}
         data['weather'] = {'value': weather['weather']}
         data['city'] = {'value': wea_city}
         data['tem_high'] = {'value': weather['temperature']}
