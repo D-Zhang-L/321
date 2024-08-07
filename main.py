@@ -60,9 +60,6 @@ if __name__ == '__main__':
     data = js_text['data']
     num = 0
     
-
-    print(words, out_time)
-
     for user_info in data:
         born_date = user_info['born_date']
         birthday = born_date[5:]
@@ -71,7 +68,7 @@ if __name__ == '__main__':
         name = user_info['user_name'].upper()
         words = get_words()
         out_time = get_time()
-
+        print(words, out_time)
 
         wea_city,weather = get_weather(city,weather_key)
         data = dict()
