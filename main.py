@@ -42,7 +42,7 @@ def get_birthday(birthday):
     return (nextdate - today).days
     
 def get_random_color():
-  return "#%06x" % random.randint(0, 0xFFFFFF)
+    return "#%06x" % random.randint(0, 0xFFFFFF)
 
 
 if __name__ == '__main__':
@@ -59,8 +59,8 @@ if __name__ == '__main__':
     f.close()
     data = js_text['data']
     num = 0
-    words=get_words()
-    out_time=get_time()
+    words = get_words()
+    out_time = get_time()
 
     print(words, out_time)
 
@@ -83,7 +83,7 @@ if __name__ == '__main__':
         data['born_days'] = {'value': get_count(born_date)}
         data['birthday_left'] = {'value': get_birthday(birthday)}
         data['wind'] = {'value': weather['winddirection']}
-        data['name'] = {'value': name, 'color':get_random_color()}
+        data['name'] = {"value": name,"color": get_random_color()}
 
         res = wm.send_template(user_id, template_id, data)
         print(res)
