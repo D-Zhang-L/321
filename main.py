@@ -17,15 +17,12 @@ def get_time():
     return nowtime.strftime("%Y年%m月%d日") + a
 
 
-def get_words():  
-    # 这里模拟 get_words() 函数的返回值，实际情况可能从文件、数据库或其他来源获取  
-    return "这是一个示例文本，用于展示如何每16个字符后换行。请确保您的文本足够长以便看到效果。"  
-  
-def format_words(words, line_length=16):  
-    # 使用列表推导式和字符串的切片功能来分割字符串  
-    # 并用 '\n' 来连接每一段  
-    formatted_words = '\n'.join(words[i:i+line_length] for i in range(0, len(words), line_length))  
-    return formatted_words  
+def get_words():
+  # OpenRefactory Warning: The 'requests.get' method does not use any 'timeout' threshold which may cause program to hang indefinitely.
+  words = requests.get("https://api.shadiao.pro/chp", timeout=100)
+  if words.status_code != 200:
+    return get_words()
+  return words.json()['data']['text']
 
 def get_weather(city, key):
     url = f"https://restapi.amap.com/v3/weather/weatherInfo?city=210200&key=d59056d227370d057687bfceeba83cf2"
@@ -71,13 +68,21 @@ if __name__ == '__main__':
         user_id = user_info['user_id']
         name = user_info['user_name'].upper()
         words = get_words()
-        formatted_words = format_words(words)
         out_time = get_time()
-        color1 = get_random_color()
-        print(formatted_words, out_time,color1)
+        print(words, out_time)
 
         wea_city,weather = get_weather(city,weather_key)
-        data = {"name":{"value": name, "color": color1},"wind":{"value":weather['winddirection']},"birthday_left":{"value":get_birthday(birthday)},"time":{"value":out_time},"words":{'value': formatted_words, "color": get_random_color()},"weather":{'value': weather['weather']},"city":{"value":wea_city},"tem_low":{"value":weather['temperature']},"born_days":{"value":get_count(born_date)}}
+        data = dict()
+        data['time'] = {'value': out_time}
+        data['words'] = {'value': words}
+        data['weather'] = {'value': weather['weather']}
+        data['city'] = {'value': wea_city}
+        data['tem_high'] = {'value': weather['temperature']}
+        data['tem_low'] = {'value': weather['temperature']}
+        data['born_days'] = {'value': get_count(born_date)}
+        data['birthday_left'] = {'value': get_birthday(birthday)}
+        data['wind'] = {'value': weather['winddirection']}
+        data['name'] = {'value': name}
 
         res = wm.send_template(user_id, template_id, data)
         print(res)
