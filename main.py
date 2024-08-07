@@ -24,12 +24,11 @@ def get_words():
     return words.json()['data']['text']
 
 def get_weather(city, key):
-    url = f"https://api.seniverse.com/v3/weather/daily.json?key={key}&location={city}&language=zh-Hans&unit=c&start=-1&days=5"
+    url = f"https://restapi.amap.com/v3/weather/weatherInfo?city=210200&key=d59056d227370d057687bfceeba83cf2"
     res = requests.get(url).json()
     print(res)
-    weather = (res['results'][0])["daily"][0]
-    city = (res['results'][0])["location"]["name"]
-    return city, weather
+    weather = res['lives'][0]
+    return '大连', weather
 
 def get_count(born_date):
     delta = today - datetime.strptime(born_date, "%Y-%m-%d")
@@ -74,13 +73,13 @@ if __name__ == '__main__':
         data = dict()
         data['time'] = {'value': out_time}
         data['words'] = {'value': words}
-        data['weather'] = {'value': weather['text_day']}
+        data['weather'] = {'value': weather['weather']}
         data['city'] = {'value': wea_city}
-        data['tem_high'] = {'value': weather['high']}
-        data['tem_low'] = {'value': weather['low']}
+        data['tem_high'] = {'value': weather['temperature']}
+        data['tem_low'] = {'value': weather['temperature']}
         data['born_days'] = {'value': get_count(born_date)}
         data['birthday_left'] = {'value': get_birthday(birthday)}
-        data['wind'] = {'value': weather['wind_direction']}
+        data['wind'] = {'value': weather['winddirection']}
         data['name'] = {'value': name}
 
         res = wm.send_template(user_id, template_id, data)
