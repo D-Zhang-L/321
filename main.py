@@ -59,8 +59,7 @@ if __name__ == '__main__':
     f.close()
     data = js_text['data']
     num = 0
-    words = get_words()
-    out_time = get_time()
+    
 
     print(words, out_time)
 
@@ -70,12 +69,14 @@ if __name__ == '__main__':
         city = user_info['city']
         user_id = user_info['user_id']
         name = user_info['user_name'].upper()
+        words = get_words()
+        out_time = get_time()
 
 
         wea_city,weather = get_weather(city,weather_key)
         data = dict()
         data['time'] = {'value': out_time}
-        data['words'] = {'value': words}
+        data['words'] = {'value': words, "color": get_random_color()}
         data['weather'] = {'value': weather['weather']}
         data['city'] = {'value': wea_city}
         data['tem_high'] = {'value': weather['temperature']}
@@ -83,7 +84,7 @@ if __name__ == '__main__':
         data['born_days'] = {'value': get_count(born_date)}
         data['birthday_left'] = {'value': get_birthday(birthday)}
         data['wind'] = {'value': weather['winddirection']}
-        data['name'] = {"value": name,"color": get_random_color()}
+        data['name'] = {"value": name, "color": get_random_color()}
 
         res = wm.send_template(user_id, template_id, data)
         print(res)
