@@ -68,10 +68,11 @@ if __name__ == '__main__':
         name = user_info['user_name'].upper()
         words = get_words()
         out_time = get_time()
-        print(words, out_time)
+        color1 = get_random_color()
+        print(words, out_time,color1)
 
         wea_city,weather = get_weather(city,weather_key)
-        data = {"name":{"value": name, "color": get_random_color()},"wind":{"value":weather['winddirection']},"birthday_left":{"value":get_birthday(birthday)},"time":{"value":out_time},"words":{'value': words, "color": get_random_color()},"weather":{'value': weather['weather']},"city":{"value":wea_city},"tem_low":{"value":weather['temperature']},"born_days":{"value":get_count(born_date)}}
+        data = {"name":{"value": name, "color": color1},"wind":{"value":weather['winddirection']},"birthday_left":{"value":get_birthday(birthday)},"time":{"value":out_time},"words":{'value': words, "color": get_random_color()},"weather":{'value': weather['weather']},"city":{"value":wea_city},"tem_low":{"value":weather['temperature']},"born_days":{"value":get_count(born_date)}}
 
         res = wm.send_template(user_id, template_id, data)
         print(res)
