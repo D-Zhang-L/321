@@ -17,12 +17,9 @@ def get_time():
     return nowtime.strftime("%Y年%m月%d日") + a
 
 
-def get_words():
-  # OpenRefactory Warning: The 'requests.get' method does not use any 'timeout' threshold which may cause program to hang indefinitely.
-  words = requests.get("https://api.shadiao.pro/chp", timeout=100)
-  if words.status_code != 200:
-    return get_words()
-  return words.json()['data']['text']
+def get_words():  
+    # 这里返回一个示例字符串，实际中您可能从某处获取它  
+    return "这是一个非常长的字符串，需要被分割成多个部分"  
 
 def get_weather(city, key):
     url = f"https://restapi.amap.com/v3/weather/weatherInfo?city=210200&key=d59056d227370d057687bfceeba83cf2"
@@ -70,11 +67,27 @@ if __name__ == '__main__':
         words = get_words()
         out_time = get_time()
         print(words, out_time)
+        
+  
 
         wea_city,weather = get_weather(city,weather_key)
         data = dict()
         data['time'] = {'value': out_time}
         data['words'] = {'value': words}
+        
+        words_length = len(words) 
+        start = 0  
+        end = 16  
+        index = 1  
+        while start < words_length:  
+            # 计算当前片段的结束位置，但不超过words的总长度  
+            end = min(end, words_length)  
+            # 提取当前片段并添加到message_data中  
+            data[f'words{index}'] = {'value': words[start:end]}  
+            # 更新start和end以及index以准备下一个片段  
+            start += 16  
+            end += 16  
+            index += 1
         data['weather'] = {'value': weather['weather']}
         data['city'] = {'value': wea_city}
         data['tem_high'] = {'value': weather['temperature']}
