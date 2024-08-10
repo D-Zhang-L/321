@@ -17,9 +17,12 @@ def get_time():
     return nowtime.strftime("%Y年%m月%d日") + a
 
 
-def get_words():  
-    # 这里返回一个示例字符串，实际中您可能从某处获取它  
-    return "这是一个非常长的字符串，需要被分割成多个部分，这是一个非常长的字符串，需要被分割成多个部分，       这是一个非常长的字符串，需要被分割成多个部分，这是一个非常长的字符串，需要被分割成多个部分，          这是一个非常长的字符串，需要被分割成多个部分，这是一个非常长的字符串，需要被分割成多个部分，           这是一个非常长的字符串，需要被分割成多个部分，这是一个非常长的字符串，需要被分割成多个部分，这是一个非常长的字符串，需要被分割成多个部分，这是一个非常长的字符串，需要被分割成多个部分"  
+def get_words():
+  # OpenRefactory Warning: The 'requests.get' method does not use any 'timeout' threshold which may cause program to hang indefinitely.
+  words = requests.get("https://api.shadiao.pro/chp", timeout=100)
+  if words.status_code != 200:
+    return get_words()
+  return words.json()['data']['text'] 
 
 def get_weather(city, key):
     url = f"https://restapi.amap.com/v3/weather/weatherInfo?city=210200&key=d59056d227370d057687bfceeba83cf2"
