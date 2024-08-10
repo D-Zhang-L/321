@@ -31,6 +31,10 @@ def get_weather(city, key):
 def get_count(born_date):
     delta = today - datetime.strptime(born_date, "%Y-%m-%d")
     return delta.days
+    
+def get_count_all():
+  delta = today - datetime.strptime('2023-10-01', "%Y-%m-%d")
+  return delta.days
 
 
 def get_birthday(birthday):
@@ -93,6 +97,7 @@ if __name__ == '__main__':
         data['tem_high'] = {'value': weather['temperature']}
         data['tem_low'] = {'value': weather['temperature']}
         data['born_days'] = {'value': get_count(born_date)}
+        data['count_days'] = {'value': get_count_all()}
         data['birthday_left'] = {'value': get_birthday(birthday)}
         data['wind'] = {'value': weather['winddirection']}
         data['name'] = {'value': name}
